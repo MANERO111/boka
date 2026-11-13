@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { MenuItem } from '../data/menu';
+import { useCart } from '../context/CartContext';
 
 interface ProductCardProps {
   item: MenuItem;
@@ -10,6 +11,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ item, onSelect, priority = false }: ProductCardProps) {
+  const { addItem } = useCart();
   return (
     <div
       onClick={() => onSelect(item)}
@@ -118,12 +120,19 @@ export default function ProductCard({ item, onSelect, priority = false }: Produc
             </span>
           </div>
 
-          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100/90 text-[#203751] group-hover:bg-[#ae332e] group-hover:text-white transition-all duration-300 font-bold text-xs shadow-xs group-hover:shadow-md group-hover:shadow-[#ae332e]/30">
-            <span>Commander</span>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              addItem(item, 1);
+            }}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100/90 text-[#203751] group-hover:bg-[#ae332e] group-hover:text-white transition-all duration-300 font-bold text-xs shadow-xs group-hover:shadow-md group-hover:shadow-[#ae332e]/30 cursor-pointer"
+          >
+            <span>+ Ajouter</span>
             <svg className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 4v16m8-8H4" />
             </svg>
-          </div>
+          </button>
         </div>
       </div>
     </div>

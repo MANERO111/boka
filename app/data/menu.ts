@@ -183,7 +183,7 @@ export const MENU_ITEMS: MenuItem[] = [
     badge: 'Coup de Cœur',
     description: 'Garni de tendres morceaux de poulet mariné, sauce spéciale Big Up, fromage râpé et crudités du jour.',
     ingredients: ['Tortilla souple', 'Poulet tendre sauté', 'Sauce Big Up signature', 'Cheddar râpé', 'Salade & tomates'],
-    image: '/img/p17.jpeg'
+    image: 'https://upload.wikimedia.org/wikipedia/commons/e/e5/7_Up_Mojito_330ml_can-front_PNr%C2%B00881.jpg',
   },
   {
     id: 'soft-taco-mexicain',
@@ -193,7 +193,7 @@ export const MENU_ITEMS: MenuItem[] = [
     spiceLevel: 'Épicé',
     description: 'Le vrai taco street-food mexicain avec viande assaisonnée, salsa mexicaine et fromage fondant.',
     ingredients: ['Tortilla souple de maïs', 'Viande assaisonnée', 'Pico de gallo', 'Sauce mexicaine'],
-    image: '/img/p17.jpeg'
+    image: 'https://upload.wikimedia.org/wikipedia/commons/e/e5/7_Up_Mojito_330ml_can-front_PNr%C2%B00881.jpg',
   },
   {
     id: 'soft-taco-spicy',
@@ -203,7 +203,7 @@ export const MENU_ITEMS: MenuItem[] = [
     spiceLevel: 'Très Épicé',
     description: 'Coquille souple de maïs garnie de viande épicée, dés de tomates fraîches, salade, cheddar et sauce chili pimentée.',
     ingredients: ['Tortilla souple', 'Viande hachée épicée', 'Dés de tomates', 'Salade verte croquante', 'Sauce chili piquante'],
-    image: '/img/p17.jpeg'
+    image: 'https://upload.wikimedia.org/wikipedia/commons/e/e5/7_Up_Mojito_330ml_can-front_PNr%C2%B00881.jpg',
   },
   {
     id: 'soft-bbq',
@@ -212,7 +212,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 16,
     description: 'Tortilla souple garnie de viandes grillées caramélisées au barbecue, oignons doux et fromage fondant.',
     ingredients: ['Tortilla souple', 'Poulet grillé BBQ', 'Salade', 'Tomates fraîches', 'Sauce barbecue fumée'],
-    image: '/img/p17.jpeg'
+    image: 'https://upload.wikimedia.org/wikipedia/commons/e/e5/7_Up_Mojito_330ml_can-front_PNr%C2%B00881.jpg',
   },
 
   // --- CLASSIC & BURGERS ---
@@ -418,7 +418,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 6,
     description: 'Bouteille rafraîchissante de Pepsi 25cl servie bien fraîche.',
     ingredients: ['Boisson gazeuse rafraîchissante'],
-    image: '/img/p17.jpeg'
+    image: 'img/pepsi.webp'
   },
   {
     id: 'pepsi-zero-33cl',
@@ -427,7 +427,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 8,
     description: 'Canette fraîche de Pepsi Zéro sucre 33cl.',
     ingredients: ['Boisson gazeuse sans sucre'],
-    image: '/img/p17.jpeg'
+    image: 'img/pepsi_zero_33.jpg',
   },
   {
     id: '7up-25cl',
@@ -436,7 +436,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 6,
     description: 'Boisson rafraîchissante aux arômes naturels de citron et lime 25cl.',
     ingredients: ['Boisson gazeuse citron-lime'],
-    image: '/img/p17.jpeg'
+    image: 'img/7up.webp',
   },
   {
     id: 'mirinda-orange-25cl',
@@ -445,7 +445,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 6,
     description: 'Mirinda saveur Orange pétillante et fruitée 25cl.',
     ingredients: ['Boisson gazeuse arôme orange'],
-    image: '/img/p17.jpeg'
+    image: 'img/mirinda.webp',
   },
   {
     id: 'mirinda-pomme-25cl',
@@ -454,7 +454,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 6,
     description: 'Mirinda rafraîchissante au goût intense de pomme verte 25cl.',
     ingredients: ['Boisson gazeuse saveur pomme'],
-    image: '/img/p17.jpeg'
+    image: 'img/mirindaPomme.jpg',
   },
   {
     id: 'mirinda-citron-25cl',
@@ -463,7 +463,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 6,
     description: 'Mirinda saveur Citron acidulée et vivifiante 25cl.',
     ingredients: ['Boisson gazeuse arôme citron'],
-    image: '/img/p17.jpeg'
+    image: 'img/mirindaCitron.jpg',
   },
   {
     id: 'mirinda-citron-33cl',
@@ -472,7 +472,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 8,
     description: 'Canette de Mirinda saveur Citron 33cl servie glacée.',
     ingredients: ['Boisson gazeuse arôme citron'],
-    image: '/img/p17.jpeg'
+    image: 'img/mirindaC33.webp',
   },
   {
     id: 'mirinda-plus-ananas-25cl',
@@ -481,7 +481,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 7,
     description: 'Mirinda Plus aux saveurs tropicales d\'ananas 25cl.',
     ingredients: ['Boisson gazeuse ananas tropical'],
-    image: '/img/p17.jpeg'
+    image: 'img/mirindaPlus.jpg',
   },
   {
     id: 'mirinda-plus-tropical-25cl',
@@ -490,7 +490,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 7,
     description: 'Mirinda Plus saveur cocktail tropical fruité 25cl.',
     ingredients: ['Boisson gazeuse fruits tropicaux'],
-    image: '/img/p17.jpeg'
+    image: 'img/mirindaPlusT.jpg',
   },
   {
     id: 'palpi-25cl',
@@ -499,7 +499,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 6,
     description: 'Jus fruité et rafraîchissant avec pulpe.',
     ingredients: ['Boisson fruitée rafraîchissante'],
-    image: '/img/p17.jpeg'
+    image: 'img/pulpy.jpg',
   },
   {
     id: 'oulmes-33cl',
@@ -508,7 +508,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 6,
     description: 'Eau minérale gazeuse naturelle pétillante marocaine servie bien fraîche.',
     ingredients: ['Eau minérale gazeuse naturelle'],
-    image: '/img/p17.jpeg'
+    image: 'img/oulmas.png',
   },
   {
     id: 'aquafina-50cl',
@@ -517,7 +517,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 6,
     description: 'Eau minérale pure et rafraîchissante 50cl.',
     ingredients: ['Eau pure minérale'],
-    image: '/img/p17.jpeg'
+    image: 'img/aquafina50cl.jpg',
   },
   {
     id: 'lipton-citron-33cl',
@@ -526,7 +526,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 10,
     description: 'Thé glacé Lipton saveur citron rafraîchissant 33cl.',
     ingredients: ['Thé glacé arôme citron'],
-    image: '/img/p17.jpeg'
+    image: 'img/liptonCitron.jpg',
   },
   {
     id: 'lipton-fruit-rouge-33cl',
@@ -535,7 +535,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 10,
     description: 'Thé glacé Lipton saveur fruits rouges délicieux 33cl.',
     ingredients: ['Thé glacé fruits rouges'],
-    image: '/img/p17.jpeg'
+    image: 'img/liptonRed.jpg',
   },
   {
     id: 'tiramisu',
@@ -546,7 +546,7 @@ export const MENU_ITEMS: MenuItem[] = [
     badge: 'Dessert Maison',
     description: 'Délicieux tiramisu artisanal préparé maison avec mascarpone onctueux, biscuit cuillère et cacao pur.',
     ingredients: ['Crème au mascarpone fouettée', 'Biscuits imbibés au café', 'Cacao en poudre', 'Vanille'],
-    image: '/img/p17.jpeg'
+    image: 'img/tiramisu.png',
   },
 
   // --- SUPLIMO (Sauces & Suppléments) ---
@@ -558,7 +558,7 @@ export const MENU_ITEMS: MenuItem[] = [
     spiceLevel: 'Épicé',
     description: 'Pot de sauce algérienne épicée aux oignons caramélisés et tomate piquante.',
     ingredients: ['Mayonnaise, tomates, oignons frits, piment'],
-    image: '/img/p17.jpeg'
+    image: 'img/algerien.jpg',
   },
   {
     id: 'suplimo-ss-bigup',
@@ -567,7 +567,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 2,
     description: 'La sauce signature de la maison, douce et riche en condiments.',
     ingredients: ['Sauce spéciale Boka'],
-    image: '/img/p17.jpeg'
+    image: 'https://upload.wikimedia.org/wikipedia/commons/e/e5/7_Up_Mojito_330ml_can-front_PNr%C2%B00881.jpg',
   },
   {
     id: 'suplimo-ss-bbq',
@@ -576,7 +576,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 2,
     description: 'Sauce barbecue au goût fumé traditionnel américain.',
     ingredients: ['Sauce barbecue américaine fumée'],
-    image: '/img/p17.jpeg'
+    image: 'img/sauceBbq.jpg',
   },
   {
     id: 'suplimo-ss-blanch',
@@ -585,7 +585,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 2,
     description: 'Sauce blanche fraîche aux herbes et pointe d\'ail doux.',
     ingredients: ['Yaourt égoutté, ail doux, ciboulette'],
-    image: '/img/p17.jpeg'
+    image: 'img/sauceBlanche.png',
   },
   {
     id: 'suplimo-ss-cheesy',
@@ -595,6 +595,6 @@ export const MENU_ITEMS: MenuItem[] = [
     badge: 'Extra Fromage',
     description: 'Pot de sauce cheddar fondue extra onctueuse pour tremper vos frites et poulets.',
     ingredients: ['Cheddar coulant fondu chaud'],
-    image: '/img/p17.jpeg'
+    image: 'img/sauceChesse.jpg',
   }
 ];

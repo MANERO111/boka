@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { MenuItem } from '../data/menu';
+import { useCart } from '../context/CartContext';
 
 interface ProductModalProps {
   item: MenuItem | null;
@@ -11,6 +12,8 @@ interface ProductModalProps {
 
 export default function ProductModal({ item, onClose, onOrderWhatsapp }: ProductModalProps) {
   const [quantity, setQuantity] = useState(1);
+  const [addedFeedback, setAddedFeedback] = useState(false);
+  const { addItem } = useCart();
 
   // Reset quantity when modal opens for a new product
   useEffect(() => {
@@ -219,22 +222,48 @@ export default function ProductModal({ item, onClose, onOrderWhatsapp }: Product
             <div className="flex flex-col sm:flex-row gap-2.5">
               <button
                 type="button"
+                onClick={() => {
+                  addItem(item, quantity);
+                  setAddedFeedback(true);
+                  setTimeout(() => {
+                    setAddedFeedback(false);
+                    onClose();
+                  }, 800);
+                }}
+                className={`flex-1 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl font-black text-sm shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer ${
+                  addedFeedback
+                    ? 'bg-emerald-600 text-white shadow-emerald-600/30'
+                    : 'bg-[#ae332e] hover:bg-[#962924] text-white shadow-[#ae332e]/30'
+                }`}
+              >
+                {addedFeedback ? (
+                  <>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>Ajouté !</span>
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z" />
+                    </svg>
+                    <span>Ajouter au Panier ({totalPrice} DH)</span>
+                  </>
+                )}
+              </button>
+
+              <button
+                type="button"
                 onClick={handleWhatsapp}
-                className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm shadow-xl shadow-emerald-600/30 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+                title="Commander via WhatsApp"
               >
                 <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
                   <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.529 1.768.814 2.79.814 3.182 0 5.768-2.587 5.768-5.766 0-3.18-2.586-5.766-5.767-5.766zm9.969 5.766c0 5.514-4.486 10-10 10-1.761 0-3.414-.46-4.856-1.264l-5.144 1.348 1.373-5.018c-.88-1.488-1.373-3.218-1.373-5.066 0-5.514 4.486-10 10-10s10 4.486 10 10z"/>
                 </svg>
-                <span>Commander ({totalPrice} DH)</span>
+                <span>WhatsApp</span>
               </button>
-
-              <a
-                href="tel:+212663110370"
-                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl bg-[#203751] hover:bg-[#152538] text-white font-bold text-sm shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all"
-                title="Appeler le restaurant"
-              >
-                <span>📞 Appeler</span>
-              </a>
             </div>
           </div>
         </div>

@@ -2,9 +2,11 @@
 
 import React, { useState } from 'react';
 import Logo from './Logo';
+import { useCart } from '../context/CartContext';
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { totalItems, setCartOpen } = useCart();
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
@@ -53,8 +55,24 @@ export default function Navbar() {
           </a>
         </nav>
 
-        {/* CTA Button */}
+        {/* CTA Button + Cart */}
         <div className="hidden sm:flex items-center gap-3">
+          {/* Cart Button */}
+          <button
+            onClick={() => setCartOpen(true)}
+            className="relative inline-flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-[#203751] hover:bg-[#152538] text-white font-bold text-sm shadow-md transition-all hover:scale-105 cursor-pointer"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z" />
+            </svg>
+            <span>Panier</span>
+            {totalItems > 0 && (
+              <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-[#ae332e] text-white text-[10px] font-black flex items-center justify-center shadow-md animate-in zoom-in duration-200">
+                {totalItems}
+              </span>
+            )}
+          </button>
+
           <a
             href="https://wa.me/212663110370?text=Bonjour%20BOKA,%20je%20souhaite%20passer%20commande%20svp"
             target="_blank"
@@ -64,7 +82,7 @@ export default function Navbar() {
             <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
               <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.529 1.768.814 2.79.814 3.182 0 5.768-2.587 5.768-5.766 0-3.18-2.586-5.766-5.767-5.766zm9.969 5.766c0 5.514-4.486 10-10 10-1.761 0-3.414-.46-4.856-1.264l-5.144 1.348 1.373-5.018c-.88-1.488-1.373-3.218-1.373-5.066 0-5.514 4.486-10 10-10s10 4.486 10 10z"/>
             </svg>
-            <span>Commander</span>
+            <span>WhatsApp</span>
           </a>
         </div>
 
@@ -116,6 +134,17 @@ export default function Navbar() {
             Contact & Horaires
           </a>
           <div className="pt-3 border-t border-slate-100 flex flex-col gap-2">
+            <button
+              onClick={() => { setMobileMenuOpen(false); setCartOpen(true); }}
+              className="w-full text-center py-3 rounded-xl bg-[#203751] text-white font-bold flex items-center justify-center gap-2 cursor-pointer"
+            >
+              🛒 Mon Panier
+              {totalItems > 0 && (
+                <span className="px-2 py-0.5 rounded-full bg-[#ae332e] text-white text-xs font-black">
+                  {totalItems}
+                </span>
+              )}
+            </button>
             <a
               href="https://wa.me/212663110370"
               className="w-full text-center py-3 rounded-xl bg-[#ae332e] text-white font-bold"

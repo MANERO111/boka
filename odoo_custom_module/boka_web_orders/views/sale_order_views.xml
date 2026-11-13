@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 1. Extend Sale Order List View (Quotation tree) -->
+    <record id="view_quotation_tree_inherit_boka" model="ir.ui.view">
+        <field name="name">sale.order.tree.inherit.boka</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="x_web_order_id" optional="show" string="N° Web"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- 2. Extend Confirmed Orders List View -->
+    <record id="view_order_tree_inherit_boka" model="ir.ui.view">
+        <field name="name">sale.order.list.inherit.boka</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="x_web_order_id" optional="show" string="N° Web"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- 3. Extend Sale Order Form View -->
+    <record id="view_order_form_inherit_boka" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.boka</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="before">
+                <field name="x_web_order_id" placeholder="ex: WEB-20261111-0001"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- 4. Extend Sale Order Search View -->
+    <record id="view_sales_order_filter_inherit_boka" model="ir.ui.view">
+        <field name="name">sale.order.search.inherit.boka</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="x_web_order_id" string="N° Commande Web"/>
+            </xpath>
+            <xpath expr="//filter[@name='my_sale_orders_filter']" position="after">
+                <separator/>
+                <filter string="Commandes Web" name="filter_web_orders" domain="[('x_is_web_order', '=', True)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- 5. Action Window for Boka Web Orders -->
+    <record id="action_boka_web_orders" model="ir.actions.act_window">
+        <field name="name">Commandes Web Boka</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">list,form,kanban</field>
+        <field name="domain">[('x_is_web_order', '=', True)]</field>
+        <field name="context">{'search_default_filter_web_orders': 1, 'default_x_is_web_order': True}</field>
+    </record>
+
+    <!-- 6. Menu Item under Sales -> Orders -->
+    <menuitem id="menu_boka_web_orders"
+              name="Commandes Web Boka"
+              action="action_boka_web_orders"
+              parent="sale.sale_order_menu"
+              sequence="2"/>
+</odoo>
