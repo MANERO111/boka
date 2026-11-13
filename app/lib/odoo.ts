@@ -1,11 +1,12 @@
 // Odoo 18 JSON-RPC helper and order creation API route
 // =====================================================
-// This file creates a draft sale.order in Odoo via JSON-RPC.
+// This file creates orders directly in Odoo Point de Vente (pos.order).
 // Required env vars (set in .env.local):
-//   ODOO_URL        – e.g. https://mycompany.odoo.com
+//   ODOO_URL        – e.g. http://localhost:8069
 //   ODOO_DB         – Odoo database name
 //   ODOO_USERNAME   – Odoo login (email)
 //   ODOO_PASSWORD   – Odoo password or API key
+//   ODOO_POS_NAME   – (optional) POS Config name, defaults to "BOKA"
 
 interface OdooRpcParams {
   url: string;
@@ -79,6 +80,81 @@ async function callModel(
   });
 }
 
+// Find active POS Config and Session
+async function getPosSessionAndPaymentMethod(
+  rpc: OdooRpcParams,
+  posName: string = 'BOKA'
+): Promise<{ sessionId: number; paymentMethodId: number; configId: number }> {
+  // 1. Find POS config by name
+  let configIds = await callModel(rpc, 'pos.config', 'search', [
+    [['name', '=', posName]],
+  ], { limit: 1 });
+
+  if (!configIds || configIds.length === 0) {
+    configIds = await callModel(rpc, 'pos.config', 'search', [
+      [['name', 'ilike', posName]],
+    ], { limit: 1 });
+  }
+
+  if (!configIds || configIds.length === 0) {
+    configIds = await callModel(rpc, 'pos.config', 'search', [[]], { limit: 1 });
+  }
+
+  if (!configIds || configIds.length === 0) {
+    throw new Error(`Aucun Point de Vente trouvé dans Odoo.`);
+  }
+
+  const configId = configIds[0];
+  const configData = await callModel(rpc, 'pos.config', 'read', [
+    [configId],
+    ['name', 'current_session_id', 'payment_method_ids'],
+  ]);
+
+  const cfg = configData[0];
+  let sessionId: number | null = cfg.current_session_id ? cfg.current_session_id[0] : null;
+
+  // If no session open on this config, look for any open session
+  if (!sessionId) {
+    const openSessions = await callModel(rpc, 'pos.session', 'search', [
+      [['config_id', '=', configId], ['state', '=', 'opened']],
+    ], { limit: 1 });
+
+    if (openSessions && openSessions.length > 0) {
+      sessionId = openSessions[0];
+    } else {
+      const anyOpen = await callModel(rpc, 'pos.session', 'search', [
+        [['state', '=', 'opened']],
+      ], { limit: 1 });
+      if (anyOpen && anyOpen.length > 0) {
+        sessionId = anyOpen[0];
+      }
+    }
+  }
+
+  if (!sessionId) {
+    throw new Error(
+      `La session du Point de Vente "${cfg.name}" n'est pas ouverte. Veuillez ouvrir une session dans le Point de Vente sur Odoo.`
+    );
+  }
+
+  // Get available payment method for the session/config
+  let paymentMethodId: number | null = null;
+  if (cfg.payment_method_ids && cfg.payment_method_ids.length > 0) {
+    paymentMethodId = cfg.payment_method_ids[0];
+  } else {
+    const pms = await callModel(rpc, 'pos.payment.method', 'search', [[]], { limit: 1 });
+    if (pms && pms.length > 0) {
+      paymentMethodId = pms[0];
+    }
+  }
+
+  if (!paymentMethodId) {
+    throw new Error(`Aucun mode de paiement configuré pour le Point de Vente "${cfg.name}".`);
+  }
+
+  return { sessionId, paymentMethodId, configId };
+}
+
 // Get or create a partner category (tag) for web customers
 async function getOrCreatePartnerCategory(
   rpc: OdooRpcParams,
@@ -92,7 +168,6 @@ async function getOrCreatePartnerCategory(
     return existingIds[0];
   }
 
-  // Fallback to first existing category if any
   const anyCategories = await callModel(rpc, 'res.partner.category', 'search', [
     [],
   ], { limit: 1 });
@@ -123,7 +198,6 @@ async function findOrCreatePartner(
 
   if (existingIds && existingIds.length > 0) {
     const partnerId = existingIds[0];
-    // Ensure partner has category_id set (required by custom modules like livraison_module)
     try {
       const partnerData = await callModel(rpc, 'res.partner', 'read', [
         [partnerId],
@@ -206,7 +280,7 @@ async function getOrCreateGenericProduct(
 
   if (ids && ids.length > 0) return ids[0];
 
-  // Create a generic service product
+  // Create a generic consumable product
   const productId = await callModel(rpc, 'product.product', 'create', [
     {
       name: 'Produit Commande Web',
@@ -214,6 +288,7 @@ async function getOrCreateGenericProduct(
       type: 'consu',
       list_price: 0,
       sale_ok: true,
+      available_in_pos: true,
     },
   ]);
 
@@ -238,6 +313,7 @@ export async function createOdooOrder(input: OrderInput) {
   const db = process.env.ODOO_DB;
   const login = process.env.ODOO_USERNAME;
   const password = process.env.ODOO_PASSWORD;
+  const posName = process.env.ODOO_POS_NAME || 'BOKA';
 
   if (!odooUrl || !db || !login || !password) {
     throw new Error(
@@ -249,53 +325,85 @@ export async function createOdooOrder(input: OrderInput) {
   const uid = await authenticate(odooUrl, db, login, password);
   const rpc: OdooRpcParams = { url: odooUrl, db, uid, password };
 
-  // 2. Find or create customer partner
+  // 2. Find open POS session and payment method for Point de Vente BOKA
+  const { sessionId, paymentMethodId } = await getPosSessionAndPaymentMethod(rpc, posName);
+
+  // 3. Find or create customer partner
   const partnerId = await findOrCreatePartner(
     rpc,
     input.customer.name,
     input.customer.phone
   );
 
-  // 3. Generate unique order ID
+  // 4. Generate unique order ID
   const webOrderId = generateOrderId();
+  const orderRef = `Order ${webOrderId}`;
 
-  // 4. Get or create a generic product for fallback
+  // 5. Get or create a generic product for fallback
   const genericProductId = await getOrCreateGenericProduct(rpc);
 
-  // 5. Build order lines
-  const orderLines: [number, number, Record<string, any>][] = [];
+  // 6. Build POS order lines and calculate total
+  let totalAmount = 0;
+  const posOrderLines: [number, number, Record<string, any>][] = [];
 
   for (const item of input.items) {
-    // Try to match an Odoo product by reference (ID) or name
     const odooProductId = await findOdooProduct(rpc, item.productId, item.name);
+    const lineTotal = item.price * item.quantity;
+    totalAmount += lineTotal;
 
-    orderLines.push([
+    posOrderLines.push([
       0,
       0,
       {
         product_id: odooProductId || genericProductId,
-        name: item.name,
-        product_uom_qty: item.quantity,
+        qty: item.quantity,
         price_unit: item.price,
+        price_subtotal: lineTotal,
+        price_subtotal_incl: lineTotal,
+        customer_note: input.notes || '',
       },
     ]);
   }
 
-  // 6. Create draft sale.order
-  const saleOrderId = await callModel(rpc, 'sale.order', 'create', [
+  const currentDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+  // 7. Create pos.order in Point de Vente BOKA
+  const posOrderId = await callModel(rpc, 'pos.order', 'create', [
     {
+      session_id: sessionId,
       partner_id: partnerId,
-      client_order_ref: webOrderId,
-      x_web_order_id: webOrderId,
-      note: input.notes || '',
-      order_line: orderLines,
+      name: orderRef,
+      pos_reference: orderRef,
+      general_note: input.notes ? `Commande Web: ${input.notes}` : `Commande Web ${webOrderId}`,
+      amount_tax: 0,
+      amount_total: totalAmount,
+      amount_paid: totalAmount,
+      amount_return: 0,
+      lines: posOrderLines,
+      payment_ids: [
+        [
+          0,
+          0,
+          {
+            payment_method_id: paymentMethodId,
+            amount: totalAmount,
+            payment_date: currentDate,
+          },
+        ],
+      ],
     },
   ]);
 
+  // 8. Mark the order as paid in the POS session
+  try {
+    await callModel(rpc, 'pos.order', 'action_pos_order_paid', [[posOrderId]]);
+  } catch (err) {
+    console.warn('Could not mark pos.order as paid automatically:', err);
+  }
+
   return {
     orderId: webOrderId,
-    odooSaleOrderId: saleOrderId,
+    odooPosOrderId: posOrderId,
     partnerId,
   };
 }
-

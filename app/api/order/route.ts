@@ -37,8 +37,8 @@ export async function POST(request: Request) {
     return Response.json({
       success: true,
       orderId: result.orderId,
-      odooSaleOrderId: result.odooSaleOrderId,
-      message: 'Commande créée avec succès',
+      odooPosOrderId: result.odooPosOrderId,
+      message: 'Commande créée avec succès dans le Point de Vente',
     });
   } catch (error: any) {
     console.error('Order API error details:', {
