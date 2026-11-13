@@ -1,0 +1,57 @@
+id,name,default_code,list_price,categ_id,type,sale_ok,purchase_ok,description_sale
+boka_product_boca_fresh,Boca Fresh,boca-fresh,30,Boka Fast Food / Boka Sandwiches,consu,1,0,"Une version fraîche et savoureuse avec garniture fraîche, crudités croquantes et sauce spéciale Boka."
+boka_product_boca_original,Boca Original,boca-original,42,Boka Fast Food / Boka Sandwiches,consu,1,0,"Le sandwich signature Boca dans un pain croustillant aux graines, garni d'un filet de poulet pané ultra croustillant, cheddar fondu, salade fraîche et sauce maison Boka."
+boka_product_boca_spicy,Boca Spicy,boca-spicy,42,Boka Fast Food / Boka Sandwiches,consu,1,0,"La version intense du Boca pour les amateurs de sensations fortes avec jalapeños, marinade pimentée et sauce épicée artisanale."
+boka_product_boca_mexicain,Boca Mexicain,boca-mexicain,42,Boka Fast Food / Boka Sandwiches,consu,1,0,"Inspirations mexicaines : poulet mariné aux herbes latines, poivrons sautés, sauce salsa onctueuse et fromage râpé fondant."
+boka_product_boca_amirican,Boca Amirican,boca-amirican,42,Boka Fast Food / Boka Sandwiches,consu,1,0,"Gourmandise américaine pure avec double cheddar, crispy bacon de dinde, oignons frits croustillants et sauce barbecue caramélisée."
+boka_product_boca_buffalo,Boca Buffalo,boca-buffalo,42,Boka Fast Food / Boka Sandwiches,consu,1,0,"Nappé de la véritable sauce Buffalo douce-amère et relevée, accompagnée de sauce ranch fraîche et céleri croquant."
+boka_product_boca_pizza,Boca Pizza,boca-pizza,42,Boka Fast Food / Boka Sandwiches,consu,1,0,"L'accord parfait entre un sandwich et une pizza : sauce tomate basilic mijotée, mozzarella fondante filante et origan."
+boka_product_tacos_mexicain,Tacos Mexicain,tacos-mexicain,42,Boka Fast Food / Tacos Français,consu,1,0,"Saveurs latines avec sauce salsa braisée, poivrons marinés, épices tex-mex et frites dorées."
+boka_product_tacos_original,Tacos Original,tacos-original,42,Boka Fast Food / Tacos Français,consu,1,0,"Le fameux tacos garni de viandes savoureuses au choix, frites dorées à l'intérieur et nappé de notre divine sauce fromagère secrète."
+boka_product_tacos_spicy,Tacos Spicy,tacos-spicy,42,Boka Fast Food / Tacos Français,consu,1,0,"Tacos garni de viandes épicées, sauce samouraï pimentée, jalapeños et notre sauce gruyère fondante."
+boka_product_tacos_amirican,Tacos Amirican,tacos-amirican,44,Boka Fast Food / Tacos Français,consu,1,0,"Gros tacos américain avec double viande, bacon croustillant, frites et double dose de cheddar chaud."
+boka_product_tacos_cheesy,Tacos Cheesy,tacos-cheesy,42,Boka Fast Food / Tacos Français,consu,1,0,"Le paradis du fromage : cheddar, emmental râpé et sauce fromagère fondue à flot."
+boka_product_tacos_thai,Tacos Thai,tacos-thai,40,Boka Fast Food / Tacos Français,consu,1,0,"Une touche asiatique originale : poulet sauté sauce Sweet Chili thaïlandaise, coriandre, frites et crème onctueuse."
+boka_product_tacos_french,Tacos French,tacos-french,38,Boka Fast Food / Tacos Français,consu,1,0,"La recette lyonnaise traditionnelle : crème, champignons persillés, frites et sauce gruyère crémeuse."
+boka_product_soft_taco_big_up,Soft Taco Big Up,soft-taco-big-up,16,Boka Fast Food / Soft Tacos,consu,1,0,"Garni de tendres morceaux de poulet mariné, sauce spéciale Big Up, fromage râpé et crudités du jour."
+boka_product_soft_taco_mexicain,Soft Taco Mexicain,soft-taco-mexicain,16,Boka Fast Food / Soft Tacos,consu,1,0,"Le vrai taco street-food mexicain avec viande assaisonnée, salsa mexicaine et fromage fondant."
+boka_product_soft_taco_spicy,Soft Taco Spicy,soft-taco-spicy,16,Boka Fast Food / Soft Tacos,consu,1,0,"Coquille souple de maïs garnie de viande épicée, dés de tomates fraîches, salade, cheddar et sauce chili pimentée."
+boka_product_soft_bbq,Soft BBQ,soft-bbq,16,Boka Fast Food / Soft Tacos,consu,1,0,"Tortilla souple garnie de viandes grillées caramélisées au barbecue, oignons doux et fromage fondant."
+boka_product_chicken_burger,Chicken Burger,chicken-burger,32,Boka Fast Food / Classics & Burgers,consu,1,0,"Pain brioché aux graines de sésame grillé, épais filet de poulet croustillant pané minute, salade batavia, tomate et sauce burger onctueuse."
+boka_product_soft_burger,Soft Burger,soft-burger,30,Boka Fast Food / Classics & Burgers,consu,1,0,"Burger moelleux léger avec steak tendre, fromage fondant et condiments savoureux pour combler les petites faims."
+boka_product_osta_chicken,Osta Chicken,osta-chicken,30,Boka Fast Food / Classics & Burgers,consu,1,0,"Burger spécial toasté façon Osta avec galette de poulet croustillante, oignons caramélisés et sauce crémeuse."
+boka_product_soft_chees_boeuf,Soft Chees Boeuf,soft-chees-boeuf,30,Boka Fast Food / Classics & Burgers,consu,1,0,"Pain moelleux toasté garni de pur bœuf savoureux, fromage cheddar ultra fondant et sauce onctueuse."
+boka_product_frito_cheesy,Frito Cheesy,frito-cheesy,40,Boka Fast Food / Frito Crispy,consu,1,0,Délicieux frito croustillant servi sous une cascade de sauce fromage cheddar bien fondante et chaude.
+boka_product_frito_bbq_spicy,Frito BBQ Spicy,frito-bbq-spicy,40,Boka Fast Food / Frito Crispy,consu,1,0,Poulet frito nappé d'un glaçage barbecue fumé relevé d'un filet de sauce pimentée.
+boka_product_frito_big_up,Frito Big Up,frito-big-up,40,Boka Fast Food / Frito Crispy,consu,1,0,Le frito servi avec notre légendaire sauce Big Up douce et relevée aux herbes aromatiques.
+boka_product_frito_mexican,Frito Mexican,frito-mexican,40,Boka Fast Food / Frito Crispy,consu,1,0,"Bouchées croustillantes saupoudrées d'épices mexicaines cajun, accompagnées de sauce salsa fraîche."
+boka_product_frito_mechoui,Frito Mechoui,frito-mechoui,40,Boka Fast Food / Frito Crispy,consu,1,0,"Poulet frito aromatisé aux épices traditionnelles du méchoui marocain (cumin torréfié, coriandre et ail)."
+boka_product_frito_extra_spicy,Frito Extra Spicy,frito-extra-spicy,40,Boka Fast Food / Frito Crispy,consu,1,0,"Bâtonnets & morceaux de poulet ultra-croustillants frits à la commande, enrobés d'un mélange d'épices volcaniques."
+boka_product_big_box_original,Big Box Original,big-box-original,38,Boka Fast Food / Big Box,consu,1,0,"La boîte complète Boka : assortiment de tenders croustillants dorés, frites, sauces maison au choix et accompagnements."
+boka_product_big_box_spicy,Big Box Spicy,big-box-spicy,38,Boka Fast Food / Big Box,consu,1,0,"Box généreuse épicée avec tenders pimentés ultra crispy, frites dorées et sauces pimentées."
+boka_product_big_box_dragon,Big Box Dragon Boeuf,big-box-dragon,42,Boka Fast Food / Big Box,consu,1,0,"Grande boîte généreuse au bœuf savoureux avec sauce dragon piquante, frites maison croustillantes et sauces."
+boka_product_dedo_chicken_6ps,Dedo Chicken 6pcs,dedo-chicken-6ps,39,Boka Fast Food / Crispy Poulet,consu,1,0,"6 délicieux bâtonnets de poulet croustillants (« dedos ») panés à la perfection, tendres à cœur."
+boka_product_wings_6pcs,Wings 6pcs,wings-6pcs,39,Boka Fast Food / Crispy Poulet,consu,1,0,"6 ailes de poulet juteuses marinées et dorées, croustillantes à l'extérieur et savoureuses à l'intérieur."
+boka_product_pasta_salad,Pasta Salad,pasta-salad,27,Boka Fast Food / Pasta & Salades,consu,1,0,"Salade de pâtes fraîches avec fromage fondant, maïs doux, lanchon savoureux et olives noires."
+boka_product_chicken_pasta,Chicken Pasta,chicken-pasta,36,Boka Fast Food / Pasta & Salades,consu,1,0,"Pâtes sautées à la poêle avec émincé de blanc de poulet, sauce crème parfumée et fromage fondant."
+boka_product_chicken_salad,Chicken Salad,chicken-salad,39,Boka Fast Food / Pasta & Salades,consu,1,0,"Grande salade composée garnie de tranches de poulet croustillant ou grillé, crudités fraîches et assaisonnement savoureux."
+boka_product_pepsi_25cl,Pepsi 25cl,pepsi-25cl,6,Boka Fast Food / Boissons & Desserts,consu,1,0,Bouteille rafraîchissante de Pepsi 25cl servie bien fraîche.
+boka_product_pepsi_zero_33cl,Pepsi Zéro 33cl,pepsi-zero-33cl,8,Boka Fast Food / Boissons & Desserts,consu,1,0,Canette fraîche de Pepsi Zéro sucre 33cl.
+boka_product_7up_25cl,7up 25cl,7up-25cl,6,Boka Fast Food / Boissons & Desserts,consu,1,0,Boisson rafraîchissante aux arômes naturels de citron et lime 25cl.
+boka_product_mirinda_orange_25cl,Mirinda Orange 25cl,mirinda-orange-25cl,6,Boka Fast Food / Boissons & Desserts,consu,1,0,Mirinda saveur Orange pétillante et fruitée 25cl.
+boka_product_mirinda_pomme_25cl,Mirinda Pomme 25cl,mirinda-pomme-25cl,6,Boka Fast Food / Boissons & Desserts,consu,1,0,Mirinda rafraîchissante au goût intense de pomme verte 25cl.
+boka_product_mirinda_citron_25cl,Mirinda Citron 25cl,mirinda-citron-25cl,6,Boka Fast Food / Boissons & Desserts,consu,1,0,Mirinda saveur Citron acidulée et vivifiante 25cl.
+boka_product_mirinda_citron_33cl,Mirinda Citron 33cl,mirinda-citron-33cl,8,Boka Fast Food / Boissons & Desserts,consu,1,0,Canette de Mirinda saveur Citron 33cl servie glacée.
+boka_product_mirinda_plus_ananas_25cl,Mirinda Plus Ananas 25cl,mirinda-plus-ananas-25cl,7,Boka Fast Food / Boissons & Desserts,consu,1,0,Mirinda Plus aux saveurs tropicales d'ananas 25cl.
+boka_product_mirinda_plus_tropical_25cl,Mirinda Plus Tropical 25cl,mirinda-plus-tropical-25cl,7,Boka Fast Food / Boissons & Desserts,consu,1,0,Mirinda Plus saveur cocktail tropical fruité 25cl.
+boka_product_palpi_25cl,Palpi,palpi-25cl,6,Boka Fast Food / Boissons & Desserts,consu,1,0,Jus fruité et rafraîchissant avec pulpe.
+boka_product_oulmes_33cl,Oulmès,oulmes-33cl,6,Boka Fast Food / Boissons & Desserts,consu,1,0,Eau minérale gazeuse naturelle pétillante marocaine servie bien fraîche.
+boka_product_aquafina_50cl,Aquafina 50cl,aquafina-50cl,6,Boka Fast Food / Boissons & Desserts,consu,1,0,Eau minérale pure et rafraîchissante 50cl.
+boka_product_lipton_citron_33cl,Lipton Citron 33cl,lipton-citron-33cl,10,Boka Fast Food / Boissons & Desserts,consu,1,0,Thé glacé Lipton saveur citron rafraîchissant 33cl.
+boka_product_lipton_fruit_rouge_33cl,Lipton Fruit Rouge 33cl,lipton-fruit-rouge-33cl,10,Boka Fast Food / Boissons & Desserts,consu,1,0,Thé glacé Lipton saveur fruits rouges délicieux 33cl.
+boka_product_tiramisu,Tiramisu,tiramisu,18,Boka Fast Food / Boissons & Desserts,consu,1,0,"Délicieux tiramisu artisanal préparé maison avec mascarpone onctueux, biscuit cuillère et cacao pur."
+boka_product_suplimo_ss_algi,Sauce Algérienne,suplimo-ss-algi,2,Boka Fast Food / Suppléments & Sauces,consu,1,0,Pot de sauce algérienne épicée aux oignons caramélisés et tomate piquante.
+boka_product_suplimo_ss_bigup,Sauce Big Up,suplimo-ss-bigup,2,Boka Fast Food / Suppléments & Sauces,consu,1,0,"La sauce signature de la maison, douce et riche en condiments."
+boka_product_suplimo_ss_bbq,Sauce BBQ,suplimo-ss-bbq,2,Boka Fast Food / Suppléments & Sauces,consu,1,0,Sauce barbecue au goût fumé traditionnel américain.
+boka_product_suplimo_ss_blanch,Sauce Blanche,suplimo-ss-blanch,2,Boka Fast Food / Suppléments & Sauces,consu,1,0,Sauce blanche fraîche aux herbes et pointe d'ail doux.
+boka_product_suplimo_ss_cheesy,Sauce Cheesy,suplimo-ss-cheesy,3,Boka Fast Food / Suppléments & Sauces,consu,1,0,Pot de sauce cheddar fondue extra onctueuse pour tremper vos frites et poulets.

@@ -162,19 +162,31 @@ function generateOrderId(): string {
   return `WEB-${date}-${rand}`;
 }
 
-// Find Odoo product IDs by name, or return a fallback generic product
+// Find Odoo product IDs by reference (default_code) or name, or return null
 async function findOdooProduct(
   rpc: OdooRpcParams,
-  productName: string
+  productRef?: string,
+  productName?: string
 ): Promise<number | null> {
-  // Search by exact name first
+  // 1. Search by Internal Reference (default_code) if provided
+  if (productRef) {
+    const idsByRef = await callModel(rpc, 'product.product', 'search', [
+      [['default_code', '=', productRef]],
+    ], { limit: 1 });
+
+    if (idsByRef && idsByRef.length > 0) return idsByRef[0];
+  }
+
+  if (!productName) return null;
+
+  // 2. Search by exact name
   let ids = await callModel(rpc, 'product.product', 'search', [
     [['name', '=', productName]],
   ], { limit: 1 });
 
   if (ids && ids.length > 0) return ids[0];
 
-  // Search by partial match
+  // 3. Search by partial match
   ids = await callModel(rpc, 'product.product', 'search', [
     [['name', 'ilike', productName]],
   ], { limit: 1 });
@@ -254,8 +266,8 @@ export async function createOdooOrder(input: OrderInput) {
   const orderLines: [number, number, Record<string, any>][] = [];
 
   for (const item of input.items) {
-    // Try to match an Odoo product by name
-    const odooProductId = await findOdooProduct(rpc, item.name);
+    // Try to match an Odoo product by reference (ID) or name
+    const odooProductId = await findOdooProduct(rpc, item.productId, item.name);
 
     orderLines.push([
       0,
