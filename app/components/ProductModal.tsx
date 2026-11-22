@@ -12,13 +12,15 @@ interface ProductModalProps {
 
 export default function ProductModal({ item, onClose, onOrderWhatsapp }: ProductModalProps) {
   const [quantity, setQuantity] = useState(1);
+  const [isMenu, setIsMenu] = useState(false);
   const [addedFeedback, setAddedFeedback] = useState(false);
   const { addItem } = useCart();
 
-  // Reset quantity when modal opens for a new product
+  // Reset quantity and menu toggle when modal opens for a new product
   useEffect(() => {
     if (item) {
       setQuantity(1);
+      setIsMenu(false);
     }
   }, [item]);
 
@@ -38,12 +40,14 @@ export default function ProductModal({ item, onClose, onOrderWhatsapp }: Product
 
   if (!item) return null;
 
-  const totalPrice = item.price * quantity;
+  const currentUnitPrice = isMenu && item.menuPrice ? item.menuPrice : item.price;
+  const totalPrice = currentUnitPrice * quantity;
 
   const handleWhatsapp = () => {
     const qStr = quantity > 1 ? ` (x${quantity})` : '';
+    const formulaStr = isMenu ? ' en Formule Menu' : ' Seul';
     const message = encodeURIComponent(
-      `Bonjour BOKA Polito Chiken ! Je souhaite commander :\n- *${item.name}*${qStr} au total de *${totalPrice} DH*.\nPouvez-vous me confirmer la disponibilité et le délai de livraison ? Merci !`
+      `Bonjour BOKA ! Je souhaite commander :\n- *${item.name}*${formulaStr}${qStr} au total de *${totalPrice} DH*.\nPouvez-vous me confirmer la commande ? Merci !`
     );
     window.open(`https://wa.me/212663110370?text=${message}`, '_blank');
   };
@@ -174,6 +178,48 @@ export default function ProductModal({ item, onClose, onOrderWhatsapp }: Product
                 <strong className="font-bold">Préparé minute à la commande :</strong> pain croustillant et viandes fraîches pour préserver tout le croquant.
               </div>
             </div>
+
+            {/* Menu vs Seul Option Selection */}
+            {item.menuPrice && (
+              <div className="bg-slate-50 rounded-2xl p-3.5 border border-slate-200/80">
+                <h4 className="text-xs font-bold text-[#203751] uppercase tracking-wider mb-2.5">
+                  Choisissez votre formule :
+                </h4>
+                <div className="grid grid-cols-2 gap-2.5">
+                  <button
+                    type="button"
+                    onClick={() => setIsMenu(false)}
+                    className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
+                      !isMenu
+                        ? 'border-[#ae332e] bg-[#ae332e]/5 text-[#203751] ring-2 ring-[#ae332e]/20'
+                        : 'border-slate-200 bg-white hover:bg-slate-100 text-slate-700'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-black text-sm">Seul</span>
+                      <span className="text-xs font-black text-[#ae332e]">{item.price} DH</span>
+                    </div>
+                    <span className="text-[11px] text-slate-500 block mt-0.5">Sandwich / Plat seul</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setIsMenu(true)}
+                    className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
+                      isMenu
+                        ? 'border-[#ae332e] bg-[#ae332e]/5 text-[#203751] ring-2 ring-[#ae332e]/20'
+                        : 'border-slate-200 bg-white hover:bg-slate-100 text-slate-700'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-black text-sm">Menu 🍟🥤</span>
+                      <span className="text-xs font-black text-[#ae332e]">{item.menuPrice} DH</span>
+                    </div>
+                    <span className="text-[11px] text-slate-500 block mt-0.5">Avec Frites + Boisson</span>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Bottom Actions: Quantity + WhatsApp CTA */}
@@ -223,7 +269,7 @@ export default function ProductModal({ item, onClose, onOrderWhatsapp }: Product
               <button
                 type="button"
                 onClick={() => {
-                  addItem(item, quantity);
+                  addItem(item, quantity, isMenu);
                   setAddedFeedback(true);
                   setTimeout(() => {
                     setAddedFeedback(false);
@@ -248,7 +294,9 @@ export default function ProductModal({ item, onClose, onOrderWhatsapp }: Product
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z" />
                     </svg>
-                    <span>Ajouter au Panier ({totalPrice} DH)</span>
+                    <span>
+                      Ajouter au Panier {isMenu ? '(Menu) ' : ''}({totalPrice} DH)
+                    </span>
                   </>
                 )}
               </button>

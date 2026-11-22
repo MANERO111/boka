@@ -34,12 +34,17 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
         body: JSON.stringify({
           customer: { name: name.trim(), phone: phone.trim() },
           notes: notes.trim(),
-          items: items.map((i) => ({
-            productId: i.product.id,
-            name: i.product.name,
-            price: i.product.price,
-            quantity: i.quantity,
-          })),
+          items: items.map((i) => {
+            const unitPrice = i.isMenu && i.product.menuPrice ? i.product.menuPrice : i.product.price;
+            const displayName = i.isMenu ? `${i.product.name} (Menu)` : i.product.name;
+            const refCode = i.isMenu ? `${i.product.id}-menu` : i.product.id;
+            return {
+              productId: refCode,
+              name: displayName,
+              price: unitPrice,
+              quantity: i.quantity,
+            };
+          }),
         }),
       });
 
@@ -109,16 +114,19 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
                   Récapitulatif ({items.length} article{items.length > 1 ? 's' : ''})
                 </h4>
                 <div className="space-y-2 max-h-40 overflow-y-auto">
-                  {items.map((item) => (
-                    <div key={item.product.id} className="flex items-center justify-between text-sm">
-                      <span className="text-slate-700 font-medium">
-                        {item.quantity}× {item.product.name}
-                      </span>
-                      <span className="font-bold text-[#203751]">
-                        {item.product.price * item.quantity} DH
-                      </span>
-                    </div>
-                  ))}
+                  {items.map((item) => {
+                    const unitPrice = item.isMenu && item.product.menuPrice ? item.product.menuPrice : item.product.price;
+                    return (
+                      <div key={`${item.product.id}-${item.isMenu ? 'menu' : 'seul'}`} className="flex items-center justify-between text-sm">
+                        <span className="text-slate-700 font-medium">
+                          {item.quantity}× {item.product.name} {item.isMenu && <span className="text-[11px] font-bold text-amber-700">(Menu)</span>}
+                        </span>
+                        <span className="font-bold text-[#203751]">
+                          {unitPrice * item.quantity} DH
+                        </span>
+                      </div>
+                    );
+                  })}
                 </div>
                 <div className="mt-3 pt-3 border-t border-slate-200 flex items-center justify-between">
                   <span className="font-bold text-[#203751]">Total</span>

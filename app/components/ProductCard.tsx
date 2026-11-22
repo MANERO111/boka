@@ -111,24 +111,31 @@ export default function ProductCard({ item, onSelect, priority = false }: Produc
 
         {/* Price & Action Button */}
         <div className="pt-2.5 border-t border-slate-100 flex items-center justify-between">
-          <div className="flex items-baseline gap-1">
-            <span className="text-2xl sm:text-[26px] font-black text-[#203751] group-hover:text-[#ae332e] transition-colors tracking-tight">
-              {item.price}
-            </span>
-            <span className="text-xs font-black text-[#ae332e] uppercase tracking-wider">
-              DH
-            </span>
+          <div className="flex flex-col">
+            <div className="flex items-baseline gap-1">
+              <span className="text-2xl sm:text-[26px] font-black text-[#203751] group-hover:text-[#ae332e] transition-colors tracking-tight">
+                {item.price}
+              </span>
+              <span className="text-xs font-black text-[#ae332e] uppercase tracking-wider">
+                DH
+              </span>
+            </div>
+            {item.menuPrice && (
+              <span className="text-[11px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md inline-block mt-0.5">
+                Menu : {item.menuPrice} DH
+              </span>
+            )}
           </div>
 
           <button
             type="button"
             onClick={(e) => {
               e.stopPropagation();
-              addItem(item, 1);
+              onSelect(item);
             }}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100/90 text-[#203751] group-hover:bg-[#ae332e] group-hover:text-white transition-all duration-300 font-bold text-xs shadow-xs group-hover:shadow-md group-hover:shadow-[#ae332e]/30 cursor-pointer"
           >
-            <span>+ Ajouter</span>
+            <span>Commander</span>
             <svg className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 4v16m8-8H4" />
             </svg>

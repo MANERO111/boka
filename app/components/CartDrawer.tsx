@@ -72,69 +72,80 @@ export default function CartDrawer() {
                 </button>
               </div>
             ) : (
-              items.map((item) => (
-                <div
-                  key={item.product.id}
-                  className="flex gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-100 hover:border-slate-200 transition-colors"
-                >
-                  {/* Product Image */}
-                  <div className="w-20 h-20 rounded-xl overflow-hidden bg-slate-200 shrink-0">
-                    <img
-                      src={item.product.image}
-                      alt={item.product.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-
-                  {/* Product Details */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-2">
-                      <h4 className="font-bold text-sm text-[#203751] truncate">
-                        {item.product.name}
-                      </h4>
-                      <button
-                        onClick={() => removeItem(item.product.id)}
-                        className="shrink-0 w-6 h-6 rounded-full bg-red-50 hover:bg-red-100 text-red-400 hover:text-red-600 flex items-center justify-center transition-colors cursor-pointer"
-                        title="Supprimer"
-                      >
-                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                      </button>
+              items.map((item) => {
+                const unitPrice = item.isMenu && item.product.menuPrice ? item.product.menuPrice : item.product.price;
+                const lineTotal = unitPrice * item.quantity;
+                return (
+                  <div
+                    key={`${item.product.id}-${item.isMenu ? 'menu' : 'seul'}`}
+                    className="flex gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-100 hover:border-slate-200 transition-colors"
+                  >
+                    {/* Product Image */}
+                    <div className="w-20 h-20 rounded-xl overflow-hidden bg-slate-200 shrink-0">
+                      <img
+                        src={item.product.image}
+                        alt={item.product.name}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
 
-                    <p className="text-xs text-slate-400 mt-0.5">
-                      {item.product.price} DH / unité
-                    </p>
-
-                    <div className="flex items-center justify-between mt-2">
-                      {/* Quantity Controls */}
-                      <div className="flex items-center bg-white rounded-lg border border-slate-200 p-0.5">
+                    {/* Product Details */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0">
+                          <h4 className="font-bold text-sm text-[#203751] truncate">
+                            {item.product.name}
+                          </h4>
+                          {item.isMenu && (
+                            <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-amber-100 text-amber-800 inline-block mt-0.5">
+                              🍟🥤 Formule Menu
+                            </span>
+                          )}
+                        </div>
                         <button
-                          onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
-                          className="w-7 h-7 rounded-md hover:bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-sm transition-colors cursor-pointer"
+                          onClick={() => removeItem(item.product.id, item.isMenu)}
+                          className="shrink-0 w-6 h-6 rounded-full bg-red-50 hover:bg-red-100 text-red-400 hover:text-red-600 flex items-center justify-center transition-colors cursor-pointer"
+                          title="Supprimer"
                         >
-                          −
-                        </button>
-                        <span className="w-8 text-center font-black text-xs text-[#203751]">
-                          {item.quantity}
-                        </span>
-                        <button
-                          onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
-                          className="w-7 h-7 rounded-md hover:bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-sm transition-colors cursor-pointer"
-                        >
-                          +
+                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
+                          </svg>
                         </button>
                       </div>
 
-                      {/* Line Total */}
-                      <span className="font-black text-sm text-[#ae332e]">
-                        {item.product.price * item.quantity} DH
-                      </span>
+                      <p className="text-xs text-slate-400 mt-0.5">
+                        {unitPrice} DH / unité
+                      </p>
+
+                      <div className="flex items-center justify-between mt-2">
+                        {/* Quantity Controls */}
+                        <div className="flex items-center bg-white rounded-lg border border-slate-200 p-0.5">
+                          <button
+                            onClick={() => updateQuantity(item.product.id, item.quantity - 1, item.isMenu)}
+                            className="w-7 h-7 rounded-md hover:bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-sm transition-colors cursor-pointer"
+                          >
+                            −
+                          </button>
+                          <span className="w-8 text-center font-black text-xs text-[#203751]">
+                            {item.quantity}
+                          </span>
+                          <button
+                            onClick={() => updateQuantity(item.product.id, item.quantity + 1, item.isMenu)}
+                            className="w-7 h-7 rounded-md hover:bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-sm transition-colors cursor-pointer"
+                          >
+                            +
+                          </button>
+                        </div>
+
+                        {/* Line Total */}
+                        <span className="font-black text-sm text-[#ae332e]">
+                          {lineTotal} DH
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))
+                );
+              })
             )}
           </div>
 
