@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 1. Extend POS Order List View -->
+    <record id="view_pos_order_tree_inherit_boka" model="ir.ui.view">
+        <field name="name">pos.order.list.inherit.boka</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='pos_reference']" position="after">
+                <field name="x_web_order_id" optional="show" string="N° Web"/>
+                <field name="x_order_type" widget="badge" 
+                       decoration-info="x_order_type == 'sur_place'" 
+                       decoration-warning="x_order_type == 'emporter'" 
+                       decoration-success="x_order_type == 'livraison'" 
+                       optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- 2. Extend POS Order Form View -->
+    <record id="view_pos_pos_form_inherit_boka" model="ir.ui.view">
+        <field name="name">pos.order.form.inherit.boka</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="x_order_type" widget="radio" options="{'horizontal': true}"/>
+                <field name="x_web_order_id" placeholder="ex: WEB-20261123-0001"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- 3. Extend Main POS Order Search/Filter View -->
+    <record id="view_pos_order_filter_inherit_boka" model="ir.ui.view">
+        <field name="name">pos.order.filter.inherit.boka</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="x_web_order_id" string="N° Commande Web"/>
+                <field name="x_order_type"/>
+            </xpath>
+            <xpath expr="//filter[@name='posted']" position="before">
+                <filter string="Sur Place" name="filter_sur_place" domain="[('x_order_type', '=', 'sur_place')]"/>
+                <filter string="À Emporter" name="filter_emporter" domain="[('x_order_type', '=', 'emporter')]"/>
+                <filter string="Livraison" name="filter_livraison" domain="[('x_order_type', '=', 'livraison')]"/>
+                <separator/>
+            </xpath>
+            <xpath expr="//group" position="inside">
+                <filter string="Type de Commande" name="group_by_order_type" context="{'group_by': 'x_order_type'}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

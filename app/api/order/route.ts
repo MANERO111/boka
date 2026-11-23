@@ -25,6 +25,7 @@ export async function POST(request: Request) {
         name: body.customer.name,
         phone: body.customer.phone,
       },
+      orderType: body.orderType || 'emporter',
       notes: body.notes || '',
       items: body.items.map((item: any) => ({
         productId: item.productId,
@@ -38,7 +39,9 @@ export async function POST(request: Request) {
       success: true,
       orderId: result.orderId,
       odooPosOrderId: result.odooPosOrderId,
-      message: 'Commande créée avec succès dans le Point de Vente',
+      orderType: result.orderType,
+      orderTypeLabel: result.orderTypeLabel,
+      message: 'Commande créée avec succès dans le Point de Vente (Nouveau)',
     });
   } catch (error: any) {
     console.error('Order API error details:', {

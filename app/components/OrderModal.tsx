@@ -9,10 +9,12 @@ interface OrderModalProps {
 }
 
 type OrderStep = 'form' | 'loading' | 'success' | 'error';
+type OrderType = 'sur_place' | 'emporter' | 'livraison';
 
 export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
   const { items, totalPrice, clearCart } = useCart();
   const [step, setStep] = useState<OrderStep>('form');
+  const [orderType, setOrderType] = useState<OrderType>('emporter');
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [notes, setNotes] = useState('');
@@ -33,6 +35,7 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           customer: { name: name.trim(), phone: phone.trim() },
+          orderType,
           notes: notes.trim(),
           items: items.map((i) => {
             const unitPrice = i.isMenu && i.product.menuPrice ? i.product.menuPrice : i.product.price;
@@ -65,6 +68,7 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
 
   const handleClose = () => {
     setStep('form');
+    setOrderType('emporter');
     setName('');
     setPhone('');
     setNotes('');
@@ -131,6 +135,53 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
                 <div className="mt-3 pt-3 border-t border-slate-200 flex items-center justify-between">
                   <span className="font-bold text-[#203751]">Total</span>
                   <span className="text-xl font-black text-[#ae332e]">{totalPrice} DH</span>
+                </div>
+              </div>
+
+              {/* Order Type Selection: Sur place, Emporter, Livraison */}
+              <div>
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">
+                  Mode de consommation *
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setOrderType('sur_place')}
+                    className={`py-3 px-2 rounded-2xl border text-center transition-all cursor-pointer flex flex-col items-center justify-center gap-1 ${
+                      orderType === 'sur_place'
+                        ? 'border-[#ae332e] bg-[#ae332e]/10 text-[#ae332e] ring-2 ring-[#ae332e]/30 font-black shadow-xs'
+                        : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-600 font-bold'
+                    }`}
+                  >
+                    <span className="text-xl">🍽️</span>
+                    <span className="text-xs">Sur Place</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setOrderType('emporter')}
+                    className={`py-3 px-2 rounded-2xl border text-center transition-all cursor-pointer flex flex-col items-center justify-center gap-1 ${
+                      orderType === 'emporter'
+                        ? 'border-[#ae332e] bg-[#ae332e]/10 text-[#ae332e] ring-2 ring-[#ae332e]/30 font-black shadow-xs'
+                        : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-600 font-bold'
+                    }`}
+                  >
+                    <span className="text-xl">🛍️</span>
+                    <span className="text-xs">À Emporter</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setOrderType('livraison')}
+                    className={`py-3 px-2 rounded-2xl border text-center transition-all cursor-pointer flex flex-col items-center justify-center gap-1 ${
+                      orderType === 'livraison'
+                        ? 'border-[#ae332e] bg-[#ae332e]/10 text-[#ae332e] ring-2 ring-[#ae332e]/30 font-black shadow-xs'
+                        : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-600 font-bold'
+                    }`}
+                  >
+                    <span className="text-xl">🛵</span>
+                    <span className="text-xs">Livraison</span>
+                  </button>
                 </div>
               </div>
 
@@ -212,15 +263,19 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
               </div>
 
               {/* Order ID Display */}
-              <div className="bg-gradient-to-br from-[#203751] to-[#152538] rounded-2xl p-6 text-white">
+              <div className="bg-gradient-to-br from-[#203751] to-[#152538] rounded-2xl p-6 text-white text-center">
                 <p className="text-xs uppercase tracking-widest font-bold text-slate-300 mb-2">
                   Votre N° de Commande
                 </p>
                 <p className="text-2xl sm:text-3xl font-black tracking-wider text-amber-400 select-all">
                   {orderId}
                 </p>
+                <div className="mt-3 inline-block px-3 py-1 rounded-full bg-white/10 text-xs font-bold text-amber-300">
+                  {orderType === 'sur_place' ? '🍽️ Sur Place (Table)' : orderType === 'livraison' ? '🛵 Livraison' : '🛍️ À Emporter'}
+                </div>
                 <p className="text-xs text-slate-300 mt-3 leading-relaxed">
-                  📋 Montrez ce numéro au comptoir BOKA pour récupérer votre commande.
+                  💳 Commande enregistrée en statut <strong>Nouveau</strong>.<br/>
+                  Présentez ce numéro à la caisse pour régler et confirmer votre commande.
                 </p>
               </div>
 

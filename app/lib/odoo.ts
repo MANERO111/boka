@@ -302,8 +302,11 @@ interface OrderLineInput {
   quantity: number;
 }
 
+export type OrderType = 'sur_place' | 'emporter' | 'livraison';
+
 interface OrderInput {
   customer: { name: string; phone: string };
+  orderType?: OrderType;
   notes: string;
   items: OrderLineInput[];
 }
@@ -325,8 +328,8 @@ export async function createOdooOrder(input: OrderInput) {
   const uid = await authenticate(odooUrl, db, login, password);
   const rpc: OdooRpcParams = { url: odooUrl, db, uid, password };
 
-  // 2. Find open POS session and payment method for Point de Vente BOKA
-  const { sessionId, paymentMethodId } = await getPosSessionAndPaymentMethod(rpc, posName);
+  // 2. Find open POS session for Point de Vente BOKA
+  const { sessionId } = await getPosSessionAndPaymentMethod(rpc, posName);
 
   // 3. Find or create customer partner
   const partnerId = await findOrCreatePartner(
@@ -365,45 +368,59 @@ export async function createOdooOrder(input: OrderInput) {
     ]);
   }
 
-  const currentDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
+  // Format order type label
+  const orderType = input.orderType || 'emporter';
+  const orderTypeLabel =
+    orderType === 'sur_place'
+      ? '🍽️ SUR PLACE'
+      : orderType === 'livraison'
+      ? '🛵 LIVRAISON'
+      : '🛍️ À EMPORTER';
 
-  // 7. Create pos.order in Point de Vente BOKA
-  const posOrderId = await callModel(rpc, 'pos.order', 'create', [
-    {
-      session_id: sessionId,
-      partner_id: partnerId,
-      name: orderRef,
-      pos_reference: orderRef,
-      general_note: input.notes ? `Commande Web: ${input.notes}` : `Commande Web ${webOrderId}`,
-      amount_tax: 0,
-      amount_total: totalAmount,
-      amount_paid: totalAmount,
-      amount_return: 0,
-      lines: posOrderLines,
-      payment_ids: [
-        [
-          0,
-          0,
-          {
-            payment_method_id: paymentMethodId,
-            amount: totalAmount,
-            payment_date: currentDate,
-          },
-        ],
-      ],
-    },
-  ]);
+  const orderNote = `[${orderTypeLabel}] Commande Web ${webOrderId} - Client paie à la caisse${
+    input.notes ? `\nNotes: ${input.notes}` : ''
+  }`;
 
-  // 8. Mark the order as paid in the POS session
+  // 7. Create draft pos.order in Point de Vente BOKA (state: 'draft' / Nouveau)
+  const orderVals: Record<string, any> = {
+    session_id: sessionId,
+    partner_id: partnerId,
+    name: orderRef,
+    pos_reference: orderRef,
+    general_note: orderNote,
+    amount_tax: 0,
+    amount_total: totalAmount,
+    amount_paid: 0,
+    amount_return: 0,
+    lines: posOrderLines,
+    payment_ids: [],
+  };
+
+  // Attempt to pass custom fields or takeaway if available in pos.order
   try {
-    await callModel(rpc, 'pos.order', 'action_pos_order_paid', [[posOrderId]]);
-  } catch (err) {
-    console.warn('Could not mark pos.order as paid automatically:', err);
+    const posFields = await callModel(rpc, 'pos.order', 'fields_get', [
+      ['x_order_type', 'x_web_order_id', 'takeaway'],
+    ]);
+    if (posFields.x_order_type) {
+      orderVals.x_order_type = orderType;
+    }
+    if (posFields.x_web_order_id) {
+      orderVals.x_web_order_id = webOrderId;
+    }
+    if (posFields.takeaway) {
+      orderVals.takeaway = orderType === 'emporter' || orderType === 'livraison';
+    }
+  } catch {
+    // If fields inspection fails, continue without blocking
   }
+
+  const posOrderId = await callModel(rpc, 'pos.order', 'create', [orderVals]);
 
   return {
     orderId: webOrderId,
     odooPosOrderId: posOrderId,
     partnerId,
+    orderType,
+    orderTypeLabel,
   };
 }
