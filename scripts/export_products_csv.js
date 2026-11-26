@@ -20,6 +20,7 @@ const items = eval(`(${arrayCode})`);
 const CATEGORY_MAP = {
   boka: 'Boka Fast Food / Boka Sandwiches',
   tacos: 'Boka Fast Food / Tacos Français',
+  bowls_wraps: 'Boka Fast Food / Bowls & Wraps',
   classic: 'Boka Fast Food / Classics & Burgers',
   panini: 'Boka Fast Food / Panini',
   frito: 'Boka Fast Food / Frito Crispy',

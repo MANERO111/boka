@@ -1,7 +1,7 @@
 export interface MenuItem {
   id: string;
   name: string;
-  category: 'boka' | 'tacos' | 'classic' | 'frito' | 'soft_taco' | 'big_box' | 'chiken' | 'pasta' | 'panini' | 'desserts' | 'boissons' | 'suplimo';
+  category: 'boka' | 'tacos' | 'classic' | 'frito' | 'soft_taco' | 'big_box' | 'chiken' | 'pasta' | 'panini' | 'desserts' | 'boissons' | 'suplimo' | 'bowls_wraps';
   price: number;
   menuPrice?: number;
   description: string;
@@ -16,12 +16,13 @@ export const CATEGORIES = [
   { id: 'all', label: 'Tout le Menu', icon: '🍽️' },
   { id: 'boka', label: 'Boka Sandwiches', icon: '🥖' },
   { id: 'tacos', label: 'Tacos Français', icon: '🌯' },
+  { id: 'bowls_wraps', label: 'Bowls & Wraps', icon: '🥗' },
   { id: 'classic', label: 'Classics & Burgers', icon: '🍔' },
   { id: 'frito', label: 'Frito Crispy', icon: '🍗' },
   { id: 'chiken', label: 'Crispy Poulet', icon: '🍗' },
   { id: 'big_box', label: 'Big Box', icon: '📦' },
   { id: 'panini', label: 'Panini', icon: '🥪' },
-  { id: 'pasta', label: 'Pasta & Salades', icon: '🥗' },
+  { id: 'pasta', label: 'Pasta & Salades', icon: '🍝' },
   { id: 'suplimo', label: 'Frites & Sauces', icon: '🍟' },
   { id: 'desserts', label: 'Tiramisu & Desserts', icon: '🍰' },
   { id: 'boissons', label: 'Boissons', icon: '🥤' },
@@ -53,7 +54,7 @@ export const MENU_ITEMS: MenuItem[] = [
     spiceLevel: 'Doux',
     description: "Le sandwich signature Boca dans un pain croustillant aux graines, garni d'un filet de poulet pané ultra croustillant, cheddar fondu, salade fraîche et sauce maison Boka.",
     ingredients: ['Pain baguette artisanale', 'Poulet pané doré & croustillant', 'Cheddar fondant', 'Salade croquante', 'Sauce Boka secrète'],
-    image: '/img/p14.jpeg'
+    image: '/img/sandwich_boka_crispy.webp'
   },
   {
     id: 'boca-spicy',
@@ -86,7 +87,7 @@ export const MENU_ITEMS: MenuItem[] = [
     menuPrice: 53,
     description: 'Gourmandise américaine pure avec double cheddar, crispy bacon de dinde, oignons frits croustillants et sauce barbecue caramélisée.',
     ingredients: ['Poulet pané tendre', 'Bacon grillé croustillant', 'Double cheddar affiné', 'Oignons frits croustillants', 'Sauce BBQ américaine'],
-    image: '/img/p14.jpeg'
+    image: '/img/sandwich_poulet_gourmand.webp'
   },
   {
     id: 'boca-buffalo',
@@ -110,9 +111,21 @@ export const MENU_ITEMS: MenuItem[] = [
     ingredients: ['Poulet sauté aux herbes', 'Coulis de tomate', 'Mozzarella fondante', 'Origan séché', 'Olives noires'],
     image: '/img/p15.jpeg'
   },
+  {
+    id: 'subway-poulet',
+    name: 'Subway au Poulet',
+    category: 'boka',
+    price: 42,
+    menuPrice: 48,
+    popular: true,
+    badge: 'Nouveau',
+    description: 'Subway généreux au pain baguette croustillant garni de poulet tendre mariné, crudités du jour et délicieuses sauces maison.',
+    ingredients: ['Pain baguette toasté', 'Filet de poulet mariné', 'Tomates fraîches', 'Salade croquante', 'Sauces maison'],
+    image: '/img/subway_poulet.webp'
+  },
 
   // ==========================================
-  // 2. TACOS FRANÇAIS (Prix Menu: +8 DH ou indiqué)
+  // 2. TACOS FRANÇAIS
   // ==========================================
   {
     id: 'tacos-mexicain',
@@ -136,7 +149,7 @@ export const MENU_ITEMS: MenuItem[] = [
     badge: 'Incontournable',
     description: "Le fameux tacos garni de viandes savoureuses au choix, frites dorées à l'intérieur et nappé de notre divine sauce fromagère.",
     ingredients: ['Galette de blé toastée', 'Viande hachée & poulet mariné', 'Frites croustillantes', 'Sauce fromagère maison onctueuse'],
-    image: '/img/p13.jpeg'
+    image: '/img/taco_poulet_crispy.webp'
   },
   {
     id: 'tacos-cheesy',
@@ -183,7 +196,93 @@ export const MENU_ITEMS: MenuItem[] = [
   },
 
   // ==========================================
-  // 3. CLASSICS & BURGERS
+  // 3. BOWLS & WRAPS (NOUVEAU)
+  // ==========================================
+  {
+    id: 'bowl-poulet-croustillant',
+    name: 'Bowl Poulet Croustillant',
+    category: 'bowls_wraps',
+    price: 42,
+    menuPrice: 48,
+    popular: true,
+    badge: 'Nouveau',
+    description: 'Bowl généreux composé de morceaux de poulet croustillant doré, frites croustillantes et délicieuses sauces maison Boka.',
+    ingredients: ['Morceaux de poulet croustillant', 'Frites dorées', 'Sauces maison', 'Oignons frits'],
+    image: '/img/bowl_poulet.webp'
+  },
+  {
+    id: 'bowl-poulet-jalapenos',
+    name: 'Bowl Poulet Jalapeños',
+    category: 'bowls_wraps',
+    price: 44,
+    menuPrice: 50,
+    popular: true,
+    spiceLevel: 'Très Épicé',
+    badge: 'Spicy 🔥',
+    description: 'Bowl ultra gourmand au poulet croustillant, piments jalapeños relevés, frites et sauce pimentée spéciale.',
+    ingredients: ['Poulet pané croustillant', 'Piments jalapeños', 'Sauce spicy', 'Frites croustillantes'],
+    image: '/img/bowl_jalapenos.webp'
+  },
+  {
+    id: 'wrap-poulet-grille',
+    name: 'Wrap Poulet Grillé',
+    category: 'bowls_wraps',
+    price: 36,
+    menuPrice: 42,
+    popular: true,
+    badge: 'Nouveau',
+    description: 'Tortilla souple roulée et toastée, garnie de poulet grillé tendre, crudités fraîches et sauce gourmande.',
+    ingredients: ['Tortilla de blé', 'Poulet grillé émincé', 'Salade croquante', 'Tomates fraîches', 'Sauce blanche maison'],
+    image: '/img/wrap_poulet_grille.webp'
+  },
+  {
+    id: 'wrap-boeuf-fromage',
+    name: 'Wrap Bœuf & Fromage',
+    category: 'bowls_wraps',
+    price: 38,
+    menuPrice: 44,
+    popular: true,
+    badge: 'Pur Bœuf',
+    description: 'Wrap grillé généreusement garni de viande hachée pur bœuf assaisonnée, fromage fondant coulant et oignons doux.',
+    ingredients: ['Tortilla toastée', 'Viande hachée pur bœuf', 'Cheddar fondant', 'Sauce burger', 'Crudités'],
+    image: '/img/wrap_boeuf_fromage.webp'
+  },
+  {
+    id: 'wrap-sauce-orange',
+    name: 'Wrap Poulet Sauce Orange',
+    category: 'bowls_wraps',
+    price: 36,
+    menuPrice: 42,
+    badge: 'Sauce Spéciale',
+    description: 'Wrap croustillant au poulet frit nappé d’une délicieuse sauce orange onctueuse et légèrement épicée.',
+    ingredients: ['Tortilla souple', 'Poulet croustillant', 'Sauce orange spéciale Boka', 'Fromage fondant'],
+    image: '/img/wrap_sauce_orange.webp'
+  },
+  {
+    id: 'wrap-frites',
+    name: 'Wrap Croustillant & Frites',
+    category: 'bowls_wraps',
+    price: 38,
+    menuPrice: 44,
+    description: 'Wrap croustillant complet garni de poulet frit, frites dorées à l’intérieur et cascade de sauces maison.',
+    ingredients: ['Galette de blé', 'Poulet frit croustillant', 'Frites à l’intérieur', 'Sauce fromagère', 'Sauces maison'],
+    image: '/img/wrap_frites.webp'
+  },
+  {
+    id: 'duo-wraps-crispy',
+    name: 'Duo Wraps Crispy',
+    category: 'bowls_wraps',
+    price: 45,
+    menuPrice: 51,
+    popular: true,
+    badge: 'Duo Gourmand',
+    description: 'Assortiment de 2 wraps croustillants dorés servis avec frites et sauces dipping au choix.',
+    ingredients: ['2 Wraps croustillants', 'Poulet pané tendre', 'Sauce Big Up & Sauce blanche', 'Frites'],
+    image: '/img/wraps_crispy.webp'
+  },
+
+  // ==========================================
+  // 4. CLASSICS & BURGERS
   // ==========================================
   {
     id: 'chicken-burger',
@@ -195,7 +294,7 @@ export const MENU_ITEMS: MenuItem[] = [
     badge: 'Top Burger',
     description: 'Poulet croustillant, fromage fondant et sauce blanche et pain burger.',
     ingredients: ['Bun burger artisanal', 'Poulet croustillant', 'Fromage fondant', 'Sauce blanche maison', 'Salade'],
-    image: '/img/p11.jpeg'
+    image: '/img/burger_poulet_gourmand.webp'
   },
   {
     id: 'soft-cheese-boeuf',
@@ -222,7 +321,7 @@ export const MENU_ITEMS: MenuItem[] = [
   },
 
   // ==========================================
-  // 4. PANINI
+  // 5. PANINI
   // ==========================================
   {
     id: 'panini',
@@ -234,11 +333,11 @@ export const MENU_ITEMS: MenuItem[] = [
     badge: 'Chaud & Toasté',
     description: 'Poulet croustillant, fromage fondant, frites et sauce blanche.',
     ingredients: ['Pain panini grillé', 'Poulet croustillant', 'Fromage fondant', 'Frites dorées', 'Sauce blanche'],
-    image: '/img/p17.jpeg'
+    image: '/img/panini_poulet.webp'
   },
 
   // ==========================================
-  // 5. FRITO CRISPY (Pain Arab + Poulet Crispé + Oignons Croustillants)
+  // 6. FRITO CRISPY (Pain Arab + Poulet Crispé + Oignons Croustillants)
   // Prix Seul : 43 DH, Menu : 49 DH
   // ==========================================
   {
@@ -311,7 +410,7 @@ export const MENU_ITEMS: MenuItem[] = [
   },
 
   // ==========================================
-  // 6. CRISPY POULET (Poulet Pané, Pilons, Ailes)
+  // 7. CRISPY POULET (Poulet Pané, Pilons, Ailes)
   // ==========================================
   {
     id: 'dedo-chicken-6pcs',
@@ -323,7 +422,7 @@ export const MENU_ITEMS: MenuItem[] = [
     badge: '6 Bâtonnets',
     description: '6 bâtonnets de poulet croustillants accompagnés de frites, de pain et de deux sauces barbecue et blanche.',
     ingredients: ['6 bâtonnets de poulet croustillants', 'Portion de frites', 'Pain', 'Sauce barbecue', 'Sauce blanche'],
-    image: '/img/p4.jpeg'
+    image: '/img/poulet_crispy_box.webp'
   },
   {
     id: 'drumsticks-3pcs',
@@ -350,7 +449,7 @@ export const MENU_ITEMS: MenuItem[] = [
   },
 
   // ==========================================
-  // 7. BIG BOX
+  // 8. BIG BOX
   // ==========================================
   {
     id: 'big-box-boeuf-original',
@@ -414,7 +513,7 @@ export const MENU_ITEMS: MenuItem[] = [
   },
 
   // ==========================================
-  // 8. PASTA & SALADES
+  // 9. PASTA & SALADES
   // ==========================================
   {
     id: 'chicken-salad',
@@ -453,7 +552,7 @@ export const MENU_ITEMS: MenuItem[] = [
   },
 
   // ==========================================
-  // 9. SUPPLÉMENTS & SAUCES
+  // 10. SUPPLÉMENTS & SAUCES
   // ==========================================
   {
     id: 'frite-normal',
@@ -462,7 +561,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 10,
     description: 'Portion généreuse de frites dorées croustillantes.',
     ingredients: ['Pommes de terre fraîches sélectionnées', 'Sel'],
-    image: '/img/p3.jpeg'
+    image: '/img/frites_boka.webp'
   },
   {
     id: 'frite-normal-spicy',
@@ -473,7 +572,7 @@ export const MENU_ITEMS: MenuItem[] = [
     badge: 'Piquant 🔥',
     description: 'Portion de frites dorées assaisonnées aux épices épicées piquantes.',
     ingredients: ['Frites croustillantes', 'Mélange d’épices spicy'],
-    image: '/img/p3.jpeg'
+    image: '/img/frites_spicy.webp'
   },
   {
     id: 'extra-frite',
@@ -482,7 +581,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 13,
     description: 'Grande portion XL de frites dorées croustillantes.',
     ingredients: ['Pommes de terre fraîches sélectionnées', 'Sel'],
-    image: '/img/p3.jpeg'
+    image: '/img/extra_frites.webp'
   },
   {
     id: 'extra-frite-spicy',
@@ -493,7 +592,7 @@ export const MENU_ITEMS: MenuItem[] = [
     badge: 'XL Piquant 🔥',
     description: 'Grande portion XL de frites dorées avec assaisonnement spicy pimenté.',
     ingredients: ['Grande portion de frites', 'Mélange d’épices volcaniques'],
-    image: '/img/p3.jpeg'
+    image: '/img/frites_sauces.webp'
   },
   // Sauces 2 DH
   {
@@ -592,7 +691,7 @@ export const MENU_ITEMS: MenuItem[] = [
   },
 
   // ==========================================
-  // 10. DESSERTS (Tiramisus 20 DH & Cheesecakes 25 DH)
+  // 11. DESSERTS (Tiramisus & Cheesecakes)
   // ==========================================
   {
     id: 'tiramisu-oreo',
@@ -603,7 +702,7 @@ export const MENU_ITEMS: MenuItem[] = [
     badge: 'Maison',
     description: 'Tiramisu artisanal crémeux au mascarpone avec éclats de biscuits Oreo croustillants.',
     ingredients: ['Mascarpone italien', 'Biscuits Oreo', 'Crème fouettée', 'Cacao'],
-    image: '/img/tiramisu.png'
+    image: '/img/tiramisu_oreo.webp'
   },
   {
     id: 'tiramisu-kit-kat',
@@ -613,7 +712,18 @@ export const MENU_ITEMS: MenuItem[] = [
     badge: 'Gourmand',
     description: 'Tiramisu au mascarpone onctueux garni de morceaux croustillants de Kit Kat.',
     ingredients: ['Mascarpone', 'Gaufrettes Kit Kat', 'Chocolat', 'Crème'],
-    image: '/img/tiramisu.png'
+    image: '/img/tiramisu_kitkat.webp'
+  },
+  {
+    id: 'tiramisu-kinder-bueno',
+    name: 'Tiramisu Kinder Bueno',
+    category: 'desserts',
+    price: 20,
+    popular: true,
+    badge: 'Nouveau',
+    description: 'Délicieux tiramisu maison au mascarpone onctueux garni de morceaux croustillants de Kinder Bueno.',
+    ingredients: ['Mascarpone italien', 'Kinder Bueno', 'Crème noisette', 'Biscuits'],
+    image: '/img/tiramisu_kinder_bueno.webp'
   },
   {
     id: 'tiramisu-tmx',
@@ -655,7 +765,7 @@ export const MENU_ITEMS: MenuItem[] = [
     badge: 'Chocolat Noisette',
     description: 'Tiramisu ultra gourmand généreusement nappé de Nutella fondant.',
     ingredients: ['Mascarpone velouté', 'Nutella chocolat noisette', 'Biscuits'],
-    image: '/img/tiramisu.png'
+    image: '/img/tiramisu_nutella.webp'
   },
   {
     id: 'tiramisu-caramel',
@@ -664,7 +774,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 20,
     description: 'Tiramisu onctueux rehaussé d’un caramel coulant doré et savoureux.',
     ingredients: ['Mascarpone', 'Caramel fondant', 'Biscuits cuillère'],
-    image: '/img/tiramisu.png'
+    image: '/img/tiramisu_caramel.webp'
   },
   {
     id: 'tiramisu-chocolat',
@@ -673,7 +783,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 20,
     description: 'Le grand classique tiramisu au pur chocolat noir intense et cacao saupoudré.',
     ingredients: ['Mascarpone', 'Ganache chocolat noir', 'Cacao pur'],
-    image: '/img/tiramisu.png'
+    image: '/img/tiramisu_chocolat.webp'
   },
   {
     id: 'tiramisu-speculoos',
@@ -684,7 +794,7 @@ export const MENU_ITEMS: MenuItem[] = [
     badge: 'Best-Seller',
     description: 'Tiramisu irrésistible aux brisures de Spéculoos lotus et pâte croustillante caramélisée.',
     ingredients: ['Mascarpone onctueux', 'Biscuits Spéculoos Lotus', 'Pâte de Spéculoos'],
-    image: '/img/tiramisu.png'
+    image: '/img/tiramisu_speculoos.webp'
   },
   // Cheesecakes 25 DH
   {
@@ -696,7 +806,7 @@ export const MENU_ITEMS: MenuItem[] = [
     badge: 'Fraîcheur',
     description: 'Cheesecake crémeux sur lit de biscuit sablé croquant, nappé d’un zeste de citron acidulé.',
     ingredients: ['Cream cheese', 'Sablé croustillant', 'Crémeux citron jaune frais'],
-    image: '/img/tiramisu.png'
+    image: '/img/cheesecake_citron.webp'
   },
   {
     id: 'cheesecake-oreo',
@@ -707,7 +817,7 @@ export const MENU_ITEMS: MenuItem[] = [
     badge: 'Chocolaté',
     description: 'Cheesecake fondant incrusté et saupoudré de morceaux de biscuits Oreo.',
     ingredients: ['Cream cheese fondant', 'Base sablée Oreo', 'Éclats Oreo'],
-    image: '/img/tiramisu.png'
+    image: '/img/cheesecake_oreo.webp'
   },
   {
     id: 'cheesecake-framboise',
@@ -717,11 +827,22 @@ export const MENU_ITEMS: MenuItem[] = [
     badge: 'Fruits Rouges',
     description: 'Cheesecake onctueux surmonté d’un généreux coulis de framboises fraîches.',
     ingredients: ['Cream cheese', 'Base biscuit croustillant', 'Nappage framboise'],
-    image: '/img/tiramisu.png'
+    image: '/img/cheesecake_framboise.webp'
+  },
+  {
+    id: 'cheesecake-speculoos',
+    name: 'Cheesecake Spéculoos',
+    category: 'desserts',
+    price: 25,
+    popular: true,
+    badge: 'Nouveau',
+    description: 'Cheesecake gourmand à la crème de Spéculoos Lotus sur base sablée croustillante.',
+    ingredients: ['Cream cheese', 'Sablé spéculoos', 'Coulis de spéculoos Lotus'],
+    image: '/img/cheesecake_speculoos.webp'
   },
 
   // ==========================================
-  // 11. BOISSONS FRAÎCHES
+  // 12. BOISSONS FRAÎCHES
   // ==========================================
   {
     id: 'pepsi-25cl',
